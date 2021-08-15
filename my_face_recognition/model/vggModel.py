@@ -32,10 +32,10 @@ class VggModel(MLModel):
                          optimizer=opt,
                          metrics=[constant.METRIC_ACCURACY])
 
-    def init_model(self, weights_path=None):
+    def init_model(self, weights_path=None):  # build model
         inp = Input(shape=(constant.IMG_WIDTH, constant.IMG_HEIGHT, 3))
         label = Input(shape=(self.n_classes,))
-        base_model = VGGFace(weights=None, include_top=False, input_tensor=inp, pooling='max', model='vgg16', classes=2622)  # 1000
+        base_model = VGGFace(weights=None, include_top=False, input_tensor=inp, pooling='max', model='vgg16', classes=2622)
         base_model.summary()
 
         for layer in base_model.layers:

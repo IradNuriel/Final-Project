@@ -1,12 +1,10 @@
 import os
-import sys
-import time
-import math
 import numpy as np
 from seal import *
 
 
 def add_vectors(vec1, vec2, evaluator):
+    # homomorphically add two vectors
     vec1_plus_vec2 = []
     for i in range(len(vec1)):
         vec1_plus_vec2.append(evaluator.add(vec1[i], vec2[i]))
@@ -14,6 +12,7 @@ def add_vectors(vec1, vec2, evaluator):
 
 
 def mul_vectors(vec1, vec2, evaluator):
+    # homomorphically multiply two vectors
     vec1_mul_vec2 = []
     for i in range(len(vec1)):
         vec1_mul_vec2.append(evaluator.multiply(vec1[i], vec2[i]))
@@ -21,6 +20,7 @@ def mul_vectors(vec1, vec2, evaluator):
 
 
 def sub_vectors(vec1, vec2, evaluator):
+    # homomorphically subtract two vectors
     vec1_minus_vec2 = []
     for i in range(len(vec1)):
         vec1_minus_vec2.append(evaluator.sub(vec1[i], vec2[i]))
@@ -78,6 +78,7 @@ def load_encrypted_vector_from_memory(ctx, name, path):
 
 
 def sum_elements(vec, evaluator):
+    # homomorphically sum vector's element
     sums = Ciphertext(vec[0])
     for enc in vec:
         evaluator.add_inplace(sums, enc)

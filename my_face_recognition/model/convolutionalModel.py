@@ -18,7 +18,7 @@ class ConvolutionalModel(MLModel):
                          optimizer=Common.get_sgd_optimizer(),
                          metrics=[constant.METRIC_ACCURACY])
 
-    def init_model(self, weights_path=None):
+    def init_model(self, weights_path=None):  # build model
         self.cnn = Sequential()
         self.cnn.add(Convolution2D(32, 3, padding=constant.PADDING_SAME, input_shape=self.shape))
         self.cnn.add(Activation(constant.RELU_ACTIVATION_FUNCTION))

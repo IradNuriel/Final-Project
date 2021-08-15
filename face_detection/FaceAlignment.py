@@ -61,13 +61,12 @@ def crop_image(image, det):
 
 
 def faceAlignmentAndCropping(input_img):
+    # detect faces in image and return list of them with their bounding box
     detector = dlib.get_frontal_face_detector()
-    predictor = dlib.shape_predictor(SHAPE_PREDICTOR_PATH)
     if input_img.ndim == 3:
         img = cv2.cvtColor(input_img, cv2.COLOR_BGR2GRAY)
     else:
         img = input_img
-    width, height = img.shape[:2]
     # dets = extract_face(img)
     start = time()
     dets = detector(img, 1)

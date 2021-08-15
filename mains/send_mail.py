@@ -2,12 +2,6 @@ import smtplib
 from email.message import EmailMessage
 
 
-
-
-
-
-
-
 def send_mail(name):
     gmail_user = 'noreplypythonprogram123@gmail.com'
     gmail_password = 'PP200200'

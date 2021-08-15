@@ -17,6 +17,7 @@ from util.common import Common
 class FaceDataSet(metaclass=abc.ABCMeta):
 
     def __init__(self, path,  extension_list, n_classes):
+        # create dataset from path with files in extension_list with n_classes classes
         self.path = path
         self.ext_list = extension_list
         self.n_classes = n_classes
@@ -27,6 +28,7 @@ class FaceDataSet(metaclass=abc.ABCMeta):
         self.number_labels = 0
 
     def get_data(self, vgg_img_processing=False):
+        # load data into memory
         img_path_list = os.listdir(self.path)
         self.objects, self.labels = self.fetch_img_path(img_path_list, self.path, vgg_img_processing)
         self.process_data(vgg_img_processing)
@@ -37,6 +39,7 @@ class FaceDataSet(metaclass=abc.ABCMeta):
                                 random_state=random.randint(0, 100))
 
     def process_data(self, vgg_img_processing):
+        # make the data into the right shape for training
         self.objects, self.img_obj_validation, self.labels, self.img_labels_validation = self.split_training_set()
         self.labels = np_utils.to_categorical(self.labels, self.n_classes)
         self.labels_validation = np_utils.to_categorical(self.img_labels_validation, self.n_classes)
@@ -49,6 +52,7 @@ class FaceDataSet(metaclass=abc.ABCMeta):
             self.obj_validation = Common.reshape_transform_data(self.img_obj_validation)
 
     def fetch_img_path(self, img_path_list, path, keras_img_processing):
+        # load images with their labels based on dataset structure
         images = []
         labels = []
         for img_path in img_path_list:
