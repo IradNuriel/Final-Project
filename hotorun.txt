@@ -1,0 +1,21 @@
+To download the code, 
+git clone https://github.com/IradNuriel/Final-Project-Final.git
+
+To run the code, you will need to have a windows 10 machine,
+you will also need a conda environment with python 3.8.5 with the following libreries installed:
+SEAL-Python(link to the library with a tutorial to douwnload: https://github.com/Huelse/SEAL-Python)
+OpenCV 4.5.3
+smtplib
+base64
+keras
+tensorflow
+keras_vggface
+numpy
+dlib
+skimage
+sklearn
+
+
+You will need to change the util/constant.py file according to your needs
+
+To enroll yourself, simply run the enroll_yourself.py script and follow the instructions from there
