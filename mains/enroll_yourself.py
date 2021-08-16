@@ -5,11 +5,6 @@ sys.path.append(conf_path)
 sys.path.append(conf_path+"my_face_recognition")
 from my_face_recognition.biometric_functions import *
 import cv2
-import subprocess
-from mains.send_mail import send_mail
-import time
-from util import constant
-import base64
 
 
 if __name__ == "__main__":
