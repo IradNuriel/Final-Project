@@ -1,3 +1,5 @@
 /venv/
 .idea
 weights
+/homomorphic_encryption_stuff/keys/galois_keys
+/homomorphic_encryption_stuff/keys/relin_keys
