@@ -1,3 +1,4 @@
+import gc
 import os
 import numpy as np
 from seal import *
@@ -115,10 +116,25 @@ def encrypt_binary_vector(vec, encryptor):
     return encryptor.encrypt(pl)
 
 
-def hamming_dist(vec1, vec2, evaluator):
+def hamming_dist(vec1, vec2, evaluator, relin_keys, galois_keys, ctx):
     a_minus_b = evaluator.sub(vec1, vec2)
-    return a_minus_b
-
+    del vec1
+    del vec2
+    gc.collect()
+    a_xor_b = evaluator.square(a_minus_b)
+    del a_minus_b
+    gc.collect()
+    evaluator.relinearize_inplace(a_xor_b, relin_keys)
+    steps = int(np.log2(ctx.first_context_data().parms().poly_modulus_degree()) - 1)
+    for i in range(steps):
+        rotated = evaluator.rotate_rows(a_xor_b, (2 ** i), galois_keys)
+        a_xor_b = evaluator.add(a_xor_b, rotated)
+        del rotated
+        gc.collect()
+    rotated = evaluator.rotate_columns(a_xor_b, galois_keys)
+    a_xor_b = evaluator.add(a_xor_b, rotated)
+    return a_xor_b
+    
 
 
 

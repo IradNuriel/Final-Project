@@ -1,3 +1,4 @@
+import gc
 import os
 from numpy import expand_dims
 from keras.preprocessing import image
@@ -43,12 +44,14 @@ def get_all_enrolled_users():
 
 def who_is_this(features, encrypted):
     if not encrypted:
-        features = encrypt_binary_vector(features, encryptor)
+        features = np.where(features > 0, 1, 0)
+        features = list(features) + [0] * (encoder.slot_count() - len(features))
+        features = encryptor.encrypt(encoder.encode(features))
     closest = "non-enrolled user"
     closest_val = 5523
     for (user, user_features) in users.items():
-        hd = hamming_dist(features, user_features, evaluator)
-        hd = len(decryptor.decrypt(hd).to_string().split("+"))
+        hd = hamming_dist(features, user_features, evaluator, relin_keys, galois_keys, context)
+        hd = int(decryptor.decrypt(hd).to_string(), 16)
         if hd < closest_val:
             closest = user
             closest_val = hd
@@ -58,7 +61,10 @@ def who_is_this(features, encrypted):
 def enroll(img, name):
     features = predict(feature_model, img)
     features = np.where(features > 0, 1, 0)
-    encrypted_features = encrypt_binary_vector(features, encryptor)
+    features = list(features) + [0] * (encoder.slot_count() - len(features))
+    encrypted_features = encryptor.encrypt(encoder.encode(features))
+    del features
+    gc.collect()
     if name in users.keys():
         this_is = who_is_this(encrypted_features, encrypted=True)
         if this_is == name:
@@ -72,7 +78,10 @@ def enroll(img, name):
 def who_is_this_face(img):
     features = predict(feature_model, img)
     features = np.where(features > 0, 1, 0)
-    encrypted_features = encrypt_binary_vector(features, encryptor)
+    features = list(features) + [0] * (encoder.slot_count() - len(features))
+    encrypted_features = encryptor.encrypt(encoder.encode(features))
+    del features
+    gc.collect()
     this_is = who_is_this(encrypted_features, encrypted=True)
     return this_is.replace("_", " ")
 

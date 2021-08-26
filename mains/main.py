@@ -21,7 +21,7 @@ def main():
         exit()
     cnts = {}
     i = 0
-    while i < 10:  # find the person in each of 10 frames and count it
+    while i < 3:  # find the person in each of 10 frames and count it
         ret, frame = cap.read()  # read frame
         if not ret:
             print("end")
