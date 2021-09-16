@@ -42,4 +42,9 @@ def load_params():
     return evaluator, encryptor, decryptor, encoder, context, galois_keys, relin_keys
 
 
-evaluator, encryptor, decryptor, encoder, context, galois_keys, relin_keys = load_params()
+try:
+    evaluator, encryptor, decryptor, encoder, context, galois_keys, relin_keys = load_params()
+except Exception as e:
+    generate_encryption_params()
+finally:
+    evaluator, encryptor, decryptor, encoder, context, galois_keys, relin_keys = load_params()
