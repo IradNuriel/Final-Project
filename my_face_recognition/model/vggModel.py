@@ -36,7 +36,6 @@ class VggModel(MLModel):
         inp = Input(shape=(constant.IMG_WIDTH, constant.IMG_HEIGHT, 3))
         label = Input(shape=(self.n_classes,))
         base_model = VGGFace(weights=None, include_top=False, input_tensor=inp, pooling='max', model='vgg16', classes=2622)
-        base_model.summary()
 
         for layer in base_model.layers:
             layer.trainable = False

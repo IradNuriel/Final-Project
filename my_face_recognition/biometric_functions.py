@@ -1,9 +1,11 @@
 import gc
 import os
+import pickle
+
 from numpy import expand_dims
 from keras.preprocessing import image
 from keras_vggface.utils import preprocess_input
-from homomorphic_encryption_stuff.EncryptionStuff import hamming_dist, encrypt_binary_vector, save_encrypted_binary_vector_in_memory, load_encrypted_binary_vector_from_memory
+from homomorphic_encryption_stuff.EncryptionStuff import hamming_dist, save_encrypted_binary_vector_in_memory, load_encrypted_binary_vector_from_memory
 from homomorphic_encryption_stuff.getEncryptionInfo import *
 from dataset.yaleFaceBDataSet import YaleFaceBDataSet
 from my_face_recognition.model.vggModel import VggModel
@@ -11,11 +13,13 @@ from util import constant
 from face_detection.FaceAlignment import *
 
 
+
 def initialize_model_params(weights_path):
     dataSet = YaleFaceBDataSet(constant.YALE_FACE_B_DATA_PATH, ['pgm'], 28)
     model = VggModel(dataSet, weights_path)
     features_model = model.get_feature_model()
     enrolled_users = get_all_enrolled_users()
+    
     return features_model, enrolled_users
 
 

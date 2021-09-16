@@ -1,7 +1,7 @@
 import gc
 import os
 import numpy as np
-from seal import *
+from seal import PlainModulus, SEALContext, RelinKeys, GaloisKeys, Encryptor, Evaluator, Plaintext, Ciphertext
 
 
 def add_vectors(vec1, vec2, evaluator):
